@@ -1,6 +1,12 @@
 local cmp = require 'cmp'
 local lspkind = require('lspkind')
 
+require("autoclose").setup({
+   keys = {
+      ["$"] = { escape = true, close = true, pair = "$$", enabled_filetypes = { "tex" } },
+   },
+})
+
 cmp.setup({
     sippet = {
         expand = function(args)

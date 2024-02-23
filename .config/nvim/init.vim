@@ -40,6 +40,7 @@ Plug 'hrsh7th/nvim-cmp'
 
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'm4xshen/autoclose.nvim'
 
 call plug#end()
 
