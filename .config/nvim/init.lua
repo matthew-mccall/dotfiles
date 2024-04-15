@@ -14,6 +14,7 @@ vim.opt.exrc = true
 vim.call('plug#begin')
 
 Plug('nvim-lualine/lualine.nvim')
+Plug('akinsho/bufferline.nvim', { ['tag'] = '*' })
 
 Plug('preservim/nerdtree') 
 Plug('ryanoasis/vim-devicons') 
@@ -39,11 +40,22 @@ vim.g.vimtex_view_method = 'skim'
 
 require('lualine').setup()
 
+local bufferline = require("bufferline") 
+bufferline.setup {
+    options = {
+        diasnostics = "nvim_lsp",
+        always_show_bufferline = false
+    }
+}
+
 -- Autoclose $ for inline equations for LaTeX
 require("autoclose").setup({
    keys = {
       ["$"] = { escape = true, close = true, pair = "$$", enabled_filetypes = { "tex" } },
    },
+   options = {
+       pair_spaces = true,
+   }
 })
 
 local cmp = require('cmp')
