@@ -35,4 +35,10 @@ export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agen
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-eval "$(zoxide init zsh --cmd cd)"
+if [ -x "$(which zoxide)" ];
+then
+    function cd () {
+        __zoxide_z "$@"
+    }
+    eval "$(zoxide init zsh --no-cmd)"
+fi
