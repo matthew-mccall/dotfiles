@@ -31,8 +31,12 @@ Plug('hrsh7th/cmp-cmdline')
 Plug('hrsh7th/nvim-cmp') 
 
 Plug('SirVer/ultisnips') 
-Plug('quangnguyen30192/cmp-nvim-ultisnips') 
-Plug('m4xshen/autoclose.nvim') 
+Plug('quangnguyen30192/cmp-nvim-ultisnips')
+
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+
+Plug('windwp/nvim-autopairs')
+Plug('windwp/nvim-ts-autotag')
 
 vim.call('plug#end')
 
@@ -48,15 +52,10 @@ bufferline.setup {
     }
 }
 
--- Autoclose $ for inline equations for LaTeX
-require("autoclose").setup({
-   keys = {
-      ["$"] = { escape = true, close = true, pair = "$$", enabled_filetypes = { "tex" } },
-   },
-   options = {
-       pair_spaces = true,
-   }
-})
+require("nvim-autopairs").setup {}
+require('nvim-ts-autotag').setup {}
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 local cmp = require('cmp')
 
@@ -95,9 +94,31 @@ cmp.setup.cmdline(':', {
     })
 })
 
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('lspconfig').clangd.setup {
     capabilities = capabilities
 }
 
+vim.filetype.add({
+  pattern = {
+    ['.*%.blade%.php'] = 'blade',
+  },
+})
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.blade = {
+  install_info = {
+    url = "https://github.com/EmranMR/tree-sitter-blade",
+    files = {"src/parser.c"},
+    branch = "main",
+  },
+  filetype = "blade"
+}
+
+require('nvim-treesitter.configs').setup { highlight = { enable = true } }
