@@ -37,9 +37,13 @@ Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('windwp/nvim-autopairs')
 Plug('windwp/nvim-ts-autotag')
 
+Plug('loctvl842/monokai-pro.nvim')
+
 vim.call('plug#end')
 
 vim.g.vimtex_view_method = 'skim'
+vim.g.ale_sign_error = ''
+vim.g.ale_sign_warning = ''
 
 require('lualine').setup()
 
@@ -105,3 +109,5 @@ require('lspconfig').clangd.setup {
 }
 
 require('nvim-treesitter.configs').setup { highlight = { enable = true } }
+
+vim.cmd[[colorscheme monokai-pro-spectrum]]
