@@ -10,6 +10,9 @@ vim.opt.lbr = true
 
 vim.opt.exrc = true
 
+vim.opt.spell = true
+vim.opt.spelllang = {'en_us'}
+
 vim.call('plug#begin')
 
 Plug('nvim-lualine/lualine.nvim')
@@ -110,4 +113,8 @@ require('lspconfig').clangd.setup {
 
 require('nvim-treesitter.configs').setup { highlight = { enable = true } }
 
-vim.cmd[[colorscheme monokai-pro-spectrum]]
+vim.cmd[[
+    colorscheme monokai-pro-spectrum
+    highlight Normal guibg=None ctermbg=None
+    highlight LineNr guibg=None ctermbg=None
+]]
