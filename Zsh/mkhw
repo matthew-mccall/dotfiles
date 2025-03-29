@@ -1,9 +1,0 @@
-#!/bin/bash
-
-zipFileName="$(curl -sJOL https://gist.github.com/matthew-mccall/f4d2bcb28a5822e374a6f9b9dd15262f/archive/168a43bdbd785a9827e77b48d4e39cb8bfaa60f1.zip -w '%{filename_effective}')"
-unzip $zipFileName
-
-zipFolderName="$(zipinfo -1 $zipFileName | awk 'NR==1{print $1}')"
-mv $zipFolderName/*.tex .
-
-rm -rf $zipFileName $zipFolderName

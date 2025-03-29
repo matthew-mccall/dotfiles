@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+if [ $# -ne 1 ]; then
+  echo "[ag] ❌ Usage: $0 <folder-name>"
+  exit 1
+fi
+
+mkcd () {
+	mkdir -p $@ && cd ${@:$#}
+}
+
+FOLDER_NAME=$1
+LATEX_FILE="${FOLDER_NAME}.ltx"
+TEMPLATE_URL="https://gist.github.com/matthew-mccall/98a6ed3742ac4da861b9be62ce40216a/raw/16d601507921af969998d317c0adf1c2d4043286/_s25_hw.ltx"
+
+# Create and switch into the directory
+echo "[ag] 📂 Creating and switching into directory $FOLDER_NAME..."
+mkcd $FOLDER_NAME
+if [ $? -ne 0 ]; then echo "[ag] ❌ Failed to create and switch into directory $FOLDER_NAME." 
+    exit 1 
+fi
+echo "[ag] ✅ Directory $FOLDER_NAME created and switched."
+
+# Download the LaTeX template
+echo "[ag] 🌐 Downloading LaTeX template from $TEMPLATE_URL..."
+curl -L# $TEMPLATE_URL -o $LATEX_FILE
+if [ $? -eq 0 ]; then
+  echo "[ag] ✅ LaTeX template downloaded as $LATEX_FILE."
+else
+  echo "[ag] ❌ Failed to download LaTeX template."
+  exit 1
+fi
+
+# Create .latexmkrc file
+echo "[ag] 📝 Creating .latexmkrc file..."
+cat <<EOT > .latexmkrc
+\$out_dir = 'out';
+EOT
+echo "[ag] ✅ .latexmkrc file created."
+
+echo "[ag] 🎉 LaTeX project setup complete in folder $FOLDER_NAME."
