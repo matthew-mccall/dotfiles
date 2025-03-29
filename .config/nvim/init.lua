@@ -19,7 +19,6 @@ Plug('nvim-lualine/lualine.nvim')
 Plug('akinsho/bufferline.nvim', { ['tag'] = '*' })
 
 Plug('preservim/nerdtree') 
-Plug('ryanoasis/vim-devicons') 
 
 Plug('lervag/vimtex') 
 Plug('micangl/cmp-vimtex') 
@@ -45,16 +44,19 @@ Plug('loctvl842/monokai-pro.nvim')
 vim.call('plug#end')
 
 vim.g.vimtex_view_method = 'skim'
-vim.g.ale_sign_error = ''
-vim.g.ale_sign_warning = ''
 
-require('lualine').setup()
+require('lualine').setup {
+    options = {
+        icons_enabled = false
+    }
+}
 
 local bufferline = require("bufferline") 
 bufferline.setup {
     options = {
         diasnostics = "nvim_lsp",
-        always_show_bufferline = false
+        always_show_bufferline = false,
+        buffer_close_icon = '✗'
     }
 }
 
