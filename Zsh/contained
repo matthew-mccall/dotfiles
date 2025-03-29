@@ -1,8 +1,8 @@
 #!/bin/sh
 
-docker run \
+podman run \
   --rm \
   -it \
   --mount type=bind,source="$(pwd)",target=/tmp \
   -w /tmp \
-  fedora $@
+  localhost/clion/fedora/cpp-env $@
