@@ -1,0 +1,27 @@
+source /Users/mmccall/Projects/dotfiles/scripts/antigen.zsh
+
+antigen use oh-my-zsh
+
+antigen bundle colorize
+antigen bundle gitignore
+# antigen bundle jeffreytse/zsh-vi-mode
+antigen bundle zdharma-continuum/fast-syntax-highlighting
+antigen bundle zsh-users/zsh-completions
+# antigen bundle marlonrichert/zsh-autocomplete@main
+
+# antigen theme romkatv/powerlevel10k
+
+antigen apply
+
+export PATH="$PATH:/Users/mmccall/Projects/dotfiles/scripts"
+export PATH="$PATH:/Users/mmccall/CEDev/bin"
+export PATH="$PATH:/Users/mmccall/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
+export PATH="$PATH:/Applications/Inkscape.app/Contents/MacOS"
+
+if [ -x "$(which zoxide)" ];
+then
+    function cd () {
+        __zoxide_z "$@"
+    }
+    eval "$(zoxide init zsh --no-cmd)"
+fi
