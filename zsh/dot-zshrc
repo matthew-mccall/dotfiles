@@ -1,4 +1,6 @@
-source /Users/mmccall/dotfiles/scripts/antigen.zsh
+SCRIPT_DIR=$(dirname $(realpath ~/.zshrc))
+DOTFILES_DIR=$(dirname "$SCRIPT_DIR")
+source "$DOTFILES_DIR/scripts/antigen.zsh"
 
 antigen use oh-my-zsh
 
@@ -13,7 +15,7 @@ antigen bundle zsh-users/zsh-completions
 
 antigen apply
 
-export PATH="$PATH:/Users/mmccall/dotfiles/scripts"
+export PATH="$PATH:$DOTFILES_DIR/scripts"
 export PATH="$PATH:/Users/mmccall/CEDev/bin"
 export PATH="$PATH:/Users/mmccall/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
 
