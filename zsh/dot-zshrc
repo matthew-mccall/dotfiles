@@ -16,8 +16,9 @@ antigen bundle zsh-users/zsh-completions
 antigen apply
 
 export PATH="$PATH:$DOTFILES_DIR/scripts"
-export PATH="$PATH:/Users/mmccall/CEDev/bin"
-export PATH="$PATH:/Users/mmccall/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
+export PATH="$PATH:/Users/$USER/CEDev/bin"
+export PATH="$PATH:/Users/$USER/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
+export PATH="$PATH:/Applications/Inkscape.app/Contents/MacOS/"
 
 if [ -x "$(which zoxide)" ];
 then
@@ -26,3 +27,5 @@ then
     }
     eval "$(zoxide init zsh --no-cmd)"
 fi
+
+export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
