@@ -1,22 +1,28 @@
 return {
     'hrsh7th/nvim-cmp',
-    dependendies = {
+    dependencies = {
         'dcampos/nvim-snippy',
         'dcampos/cmp-snippy',
 
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline'
+        'hrsh7th/cmp-cmdline',
+        'micangl/cmp-vimtex'
     },
     config = function()
         local cmp = require 'cmp'
         local snippy = require 'snippy'
 
-        local has_words_before = function ()
-            unpack = unpack or table.unpack
+        local has_words_before = function()
+            local unpack = unpack or table.unpack
             local line, col = unpack(vim.api.nvim_win_get_cursor(0))
             return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
         end
+
+        local default_sources = cmp.config.sources(
+            { { name = 'snippy' } },
+            { { name = 'buffer' } }
+        )
 
         cmp.setup({
             snippet = {
@@ -34,7 +40,7 @@ return {
                         cmp.select_next_item()
                     elseif snippy.can_expand_or_advance() then
                         snippy.expand_or_advance()
-                    elseif has_words_before() and cmp.visible() then
+                    elseif has_words_before() then
                         cmp.complete()
                     else
                         fallback()
@@ -51,9 +57,7 @@ return {
                 end, { "i", "s" }),
                 ['<CR>'] = cmp.mapping.confirm({ select = true })
             }),
-            sources = cmp.config.sources(
-                { { name = 'snippy' } }, 
-                { { name = 'buffer'} })
+            sources = default_sources
         })
 
         cmp.setup.cmdline({ '/', '?' }, {
@@ -70,5 +74,18 @@ return {
             }),
             matching = { disallow_symbol_nonprefix_matching = false }
         })
+
+        -- Filetype-specific completion sources (scalable dictionary)
+        -- Each value can be either a table of sources or a function that
+        -- returns a composed sources table (useful to combine with defaults).
+        local filetype_sources = {
+            tex = cmp.config.sources({ { name = 'vimtex' } }, default_sources),
+        }
+
+        for ft, sources in pairs(filetype_sources) do
+            if sources then
+                cmp.setup.filetype(ft, { sources = sources })
+            end
+        end
     end
 }

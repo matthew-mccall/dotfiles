@@ -8,7 +8,7 @@ return {
             day_night = {
                 enable = true,
                 day_filter = "light",
-                night_filter = "spectrum",
+                night_filter = "pro",
             }
         })
         -- load the colorscheme here
