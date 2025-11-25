@@ -3,5 +3,6 @@ return {
     "akinsho/bufferline.nvim",
     -- Scheme REPL integration via iron.nvim
     { import = "plugins.iron" },
+    "HiPhish/rainbow-delimiters.nvim",
     'honza/vim-snippets'
 }

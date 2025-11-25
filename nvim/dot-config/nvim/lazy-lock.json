@@ -13,6 +13,7 @@
   "nvim-cmp": { "branch": "main", "commit": "b5311ab3ed9c846b585c0c15b7559be131ec4be9" },
   "nvim-snippy": { "branch": "master", "commit": "504ab14eeb14301d9b2a858a2a6cf99ccc8d60d0" },
   "nvim-treesitter": { "branch": "master", "commit": "0e21ee8df6235511c02bab4a5b391d18e165a58d" },
+  "rainbow-delimiters.nvim": { "branch": "master", "commit": "b6b3c9e3f8db02a56416b8ee25d3dbd079ebf26b" },
   "vim-snippets": { "branch": "master", "commit": "f371d635f6f6350d34bbb483e37e383db322d145" },
   "vimtex": { "branch": "master", "commit": "40e4fa610fd44d644b7a022cf2b5ce30cb9621e0" }
 }
