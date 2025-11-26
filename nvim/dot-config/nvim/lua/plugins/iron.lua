@@ -1,6 +1,6 @@
 return {
   "hkupty/iron.nvim",
-  ft = "scheme",
+  ft = { "scheme", "haskell" },
   config = function()
     -- Configure iron.nvim with a simple Chez Scheme REPL definition.
     -- Assumptions:
@@ -20,6 +20,9 @@ return {
           scheme = {
             command = { "scheme" },
           },
+          haskell = {
+            command = { "ghci" },
+          }
         },
         -- open the REPL in a bottom split
         repl_open_cmd = "botright split",
@@ -40,26 +43,36 @@ return {
       },
     }
 
-    -- When a Scheme file is saved, reload it in the REPL with (load "<path>")
-    -- This opens the REPL (if needed) and then sends the load command.
-    vim.api.nvim_create_autocmd("BufWritePost", {
-      pattern = "*.ss",
-      callback = function(event)
-        local path = vim.fn.expand("<afile>")
+    local load_cmds = {
+      {
+        pattern = "*.ss",
+        load_cmd = function(path)
+          return '(load "' .. path .. '")'
+        end,
+      },
+      {
+        pattern = "*.hs",
+        load_cmd = function(path)
+          return ':load "' .. path .. '"'
+        end,
+      }
+    }
 
-        -- Send the load command to the REPL. Use schedule to ensure the
-        -- REPL buffer/connection has time to initialize.
-        vim.schedule(function()
-          -- Surround the path in double quotes as expected by Scheme's load
-          -- and send the exact form to the REPL.
-          local cmd = '(load "' .. path .. '")'
-          pcall(function()
-            iron.send(nil, cmd)
+    for _, repl_cfg in ipairs(load_cmds) do
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = repl_cfg.pattern,
+        callback = function(event)
+          local path = vim.fn.expand("<afile>")
+          vim.schedule(function()
+            local cmd = repl_cfg.load_cmd(path)
+            pcall(function()
+              iron.send(nil, cmd)
+            end)
           end)
-        end)
-      end,
-      desc = "Reload Scheme file in iron.nvim REPL on save",
-    })
+        end,
+      })
+    end
+
 
     -- Ensure pressing <Esc> in the terminal REPL returns to Normal mode in Neovim
     -- instead of sending the Escape to the Chez Scheme process. This maps <Esc>
