@@ -6,19 +6,21 @@ antigen use oh-my-zsh
 
 antigen bundle colorize
 antigen bundle gitignore
-# antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zdharma-continuum/fast-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
+# antigen bundle jeffreytse/zsh-vi-mode
 # antigen bundle marlonrichert/zsh-autocomplete@main
-
-# antigen theme romkatv/powerlevel10k
 
 antigen apply
 
 export PATH="$PATH:$DOTFILES_DIR/scripts"
 export PATH="$PATH:/Users/$USER/CEDev/bin"
 export PATH="$PATH:/Users/$USER/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
-export PATH="$PATH:/Applications/Inkscape.app/Contents/MacOS/"
+export PATH="$PATH:/Users/$USER/.pixi/bin:$PATH"
+export PATH="$PATH:/Applications/Inkscape.app/Contents/MacOS"
+export PATH="$PATH:/Applications/KiCad/KiCad.app/Contents/MacOS"
+
+export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
 
 if [ -x "$(which zoxide)" ];
 then
@@ -27,5 +29,3 @@ then
     }
     eval "$(zoxide init zsh --no-cmd)"
 fi
-
-export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
