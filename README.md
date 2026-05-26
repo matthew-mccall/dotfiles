@@ -32,15 +32,26 @@ directory with `--dotfiles`.
 ### helper scripts
 
 - `scripts/setup` — convenience setup entrypoint
-- `scripts/ag` — Podman wrapper for a C++/CLion-style environment
+- `scripts/ag` — LaTeX project generator with `--make-template` for rebuilding the embedded template
 - `scripts/recent-commit-links` — prints recent commit URLs, including merged PR commits
 - `scripts/contained` — generates a bundled LaTeX project template
+
+`scripts/ag` supports both the normal unpack flow and a self-templating mode:
+
+```sh
+./scripts/ag <project_name>
+./scripts/ag --make-template
+./scripts/ag --help
+```
 
 ## Requirements
 
 - GNU Stow
 - a `csh`/`tcsh`-compatible shell for `scripts/setup` (`#!/bin/csh`)
 - Neovim, tmux, and zsh for the configs in this repo
+- `base64` for encoding and decoding the embedded template payload
+- `tar` for packing and extracting the template archive
+- `xz` support for `tar -cJf` compression
 
 Some scripts also expect extra tools such as `gh`, `podman`, and `zoxide`.
 
