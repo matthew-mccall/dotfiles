@@ -19,6 +19,7 @@ export PATH="$PATH:/Users/$USER/Library/Application Support/Steam/steamapps/comm
 export PATH="$PATH:/Users/$USER/.pixi/bin:$PATH"
 export PATH="$PATH:/Applications/Inkscape.app/Contents/MacOS"
 export PATH="$PATH:/Applications/KiCad/KiCad.app/Contents/MacOS"
+export PATH="$PATH:/Applications/Wolfram.app/Contents/MacOS/"
 
 export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
 

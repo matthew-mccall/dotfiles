@@ -1,0 +1,76 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+github_slug_from_remote() {
+  local url="${1:-}"
+  url="${url%.git}"
+
+  if [[ "$url" =~ github\.com[:/]+([^/]+)/([^/]+)$ ]]; then
+    printf '%s/%s' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
+    return 0
+  fi
+
+  return 1
+}
+
+repo_slug=""
+for remote in upstream origin; do
+  if remote_url="$(git remote get-url "$remote" 2>/dev/null)"; then
+    if repo_slug="$(github_slug_from_remote "$remote_url")"; then
+      break
+    fi
+  fi
+done
+
+if [[ -z "$repo_slug" ]]; then
+  echo "❌ [ERROR]: Could not determine a GitHub repository slug from the upstream or origin remote." >&2
+  exit 1
+fi
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "❌ [ERROR]: gh is required so the script can account for merged PR contributions." >&2
+  exit 1
+fi
+
+identity_file="$(mktemp)"
+trap 'rm -f "$identity_file"' EXIT
+
+{
+  git config --get-all user.email 2>/dev/null || true
+  git config --get-all user.name 2>/dev/null || true
+} | awk 'NF && !seen[$0]++' > "$identity_file"
+
+if [[ ! -s "$identity_file" ]]; then
+  echo "❌ [ERROR]: No git user.email or user.name is configured; cannot determine your author identity." >&2
+  exit 1
+fi
+
+since_date="$(date -u -v-7d +%F 2>/dev/null || date -u -d '7 days ago' +%F)"
+
+{
+  git log --all --since='1 week ago' --format='%H%x09%ae%x09%an' |
+    awk -F $'\t' -v ids_file="$identity_file" '
+      BEGIN {
+        while ((getline line < ids_file) > 0) {
+          ids[line] = 1
+        }
+        close(ids_file)
+      }
+
+      (($2 in ids) || ($3 in ids)) {
+        print $1
+      }
+    '
+
+  gh pr list --repo "$repo_slug" --author @me --state merged --search "merged:>=$since_date" --limit 100 --json number --jq '.[].number' |
+    while IFS= read -r pr_number; do
+      [[ -n "$pr_number" ]] || continue
+      gh pr view "$pr_number" --repo "$repo_slug" --json mergeCommit,commits --jq '(.mergeCommit.oid // empty), (.commits[]?.oid // empty)' 2>/dev/null || true
+    done
+} |
+awk -v slug="$repo_slug" 'NF && !seen[$0]++ { print "https://github.com/" slug "/commit/" $0 }'
+
+
