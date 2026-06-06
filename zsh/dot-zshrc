@@ -1,17 +1,8 @@
-SCRIPT_DIR=$(dirname $(realpath ~/.zshrc))
+SCRIPT_DIR=$(dirname "$(realpath ~/.zshrc)")
 DOTFILES_DIR=$(dirname "$SCRIPT_DIR")
-source "$DOTFILES_DIR/scripts/antigen.zsh"
+source "$DOTFILES_DIR/zsh/.antidote/antidote.zsh"
 
-antigen use oh-my-zsh
-
-antigen bundle colorize
-antigen bundle gitignore
-antigen bundle zdharma-continuum/fast-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
-# antigen bundle jeffreytse/zsh-vi-mode
-# antigen bundle marlonrichert/zsh-autocomplete@main
-
-antigen apply
+antidote load "${ZDOTDIR:-$HOME}/.zsh_plugins.txt"
 
 export PATH="$PATH:$DOTFILES_DIR/scripts"
 export PATH="$PATH:/Users/$USER/CEDev/bin"

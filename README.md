@@ -23,7 +23,7 @@ directory with `--dotfiles`.
 
 ### zsh
 
-- `antigen`-based shell setup
+- `antidote`-based shell setup (tracked as a git submodule)
 - `oh-my-zsh` plus bundles for `colorize`, `gitignore`,
   `fast-syntax-highlighting`, and `zsh-completions`
 - PATH additions for local tools and desktop apps
@@ -48,6 +48,7 @@ directory with `--dotfiles`.
 ## Requirements
 
 - GNU Stow
+- git (for initializing the `zsh/.antidote` submodule)
 - a POSIX `sh` shell for `scripts/setup` and `scripts/teardown`
 - Neovim, tmux, and zsh for the configs in this repo
 - `base64` for encoding and decoding the embedded template payload
@@ -64,7 +65,7 @@ The easiest way to install the dotfiles is:
 ./scripts/setup
 ```
 
-That script changes into the repo root and runs:
+That script changes into the repo root, initializes git submodules, and runs:
 
 ```sh
 stow -v --dotfiles -t "$HOME" nvim
