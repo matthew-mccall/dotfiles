@@ -27,7 +27,7 @@ directory with `--dotfiles`.
 - `oh-my-zsh` plus bundles for `colorize`, `gitignore`,
   `fast-syntax-highlighting`, and `zsh-completions`
 - PATH additions for local tools and desktop apps
-- `zoxide` integration for smart directory jumping
+- `zoxide` integration via the Oh My Zsh plugin
 
 ### helper scripts
 

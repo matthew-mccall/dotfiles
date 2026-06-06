@@ -1,5 +1,6 @@
 SCRIPT_DIR=$(dirname "$(realpath ~/.zshrc)")
 DOTFILES_DIR=$(dirname "$SCRIPT_DIR")
+export ZOXIDE_CMD_OVERRIDE=cd
 source "$DOTFILES_DIR/zsh/.antidote/antidote.zsh"
 
 antidote load "${ZDOTDIR:-$HOME}/.zsh_plugins.txt"
@@ -26,14 +27,6 @@ for app_dir in $apps_to_load; do
         path+=( "$app_dir" )
     fi
 done
-
-if [ -x "$(which zoxide)" ];
-then
-    function cd () {
-        __zoxide_z "$@"
-    }
-    eval "$(zoxide init zsh --no-cmd)"
-fi
 
 # A safe, isolated function to check your path array
 function checkpath() {

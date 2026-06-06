@@ -1,8 +1,9 @@
 getantidote/use-omz
 ohmyzsh/ohmyzsh path:lib
-ohmyzsh/ohmyzsh path:plugins/colorize
 ohmyzsh/ohmyzsh path:plugins/gitignore
+ohmyzsh/ohmyzsh path:plugins/zoxide
 zdharma-continuum/fast-syntax-highlighting
 zsh-users/zsh-completions
+# ohmyzsh/ohmyzsh path:plugins/colorize
 # jeffreytse/zsh-vi-mode
 # marlonrichert/zsh-autocomplete@main
