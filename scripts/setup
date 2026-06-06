@@ -1,8 +1,8 @@
-#!/bin/csh
+#!/bin/sh
 
-cd "`dirname $0`/.."
+cd "$(dirname "$0")/.." || exit 1
 
 # Stow the desired packages into the home directory
-foreach package (nvim tmux zsh)
-    stow -v --dotfiles -t $HOME $package
-end
+for package in nvim tmux zsh; do
+    stow -v --dotfiles -t "$HOME" "$package"
+done

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+cd "$(dirname "$0")/.." || exit 1
+
+repo_root=$(pwd)
+removed_repo_zshrc=0
+
+if [ -L "$HOME/.zshrc" ]; then
+    zshrc_target=$(readlink "$HOME/.zshrc")
+    case "$zshrc_target" in
+        *"$repo_root"/zsh/dot-zshrc|*"/dotfiles/zsh/dot-zshrc")
+            removed_repo_zshrc=1
+            ;;
+    esac
+fi
+
+# Unstow the desired packages from the home directory
+for package in nvim tmux zsh; do
+    stow -D -v --dotfiles -t "$HOME" "$package"
+done
+
+if [ "$removed_repo_zshrc" -eq 1 ]; then
+    rm -f "$HOME/.zshrc.zwc"
+fi

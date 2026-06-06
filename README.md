@@ -32,6 +32,7 @@ directory with `--dotfiles`.
 ### helper scripts
 
 - `scripts/setup` — convenience setup entrypoint
+- `scripts/teardown` — removes stowed links for this repo's packages
 - `scripts/ag` — LaTeX project generator with `--make-template` for rebuilding the embedded template
 - `scripts/recent-commit-links` — prints recent commit URLs, including merged PR commits
 - `scripts/contained` — generates a bundled LaTeX project template
@@ -47,7 +48,7 @@ directory with `--dotfiles`.
 ## Requirements
 
 - GNU Stow
-- a `csh`/`tcsh`-compatible shell for `scripts/setup` (`#!/bin/csh`)
+- a POSIX `sh` shell for `scripts/setup` and `scripts/teardown`
 - Neovim, tmux, and zsh for the configs in this repo
 - `base64` for encoding and decoding the embedded template payload
 - `tar` for packing and extracting the template archive
