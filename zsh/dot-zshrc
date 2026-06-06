@@ -34,3 +34,14 @@ then
     }
     eval "$(zoxide init zsh --no-cmd)"
 fi
+
+# A safe, isolated function to check your path array
+function checkpath() {
+    for dir in $path; do
+        if [[ -d "$dir" ]]; then
+            echo "✅ $dir"
+        else
+            echo "❌ $dir (Broken)"
+        fi
+    done
+}
