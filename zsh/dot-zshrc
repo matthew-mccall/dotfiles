@@ -4,15 +4,28 @@ source "$DOTFILES_DIR/zsh/.antidote/antidote.zsh"
 
 antidote load "${ZDOTDIR:-$HOME}/.zsh_plugins.txt"
 
-export PATH="$PATH:$DOTFILES_DIR/scripts"
-export PATH="$PATH:/Users/$USER/CEDev/bin"
-export PATH="$PATH:/Users/$USER/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
-export PATH="$PATH:/Users/$USER/.pixi/bin:$PATH"
-export PATH="$PATH:/Applications/Inkscape.app/Contents/MacOS"
-export PATH="$PATH:/Applications/KiCad/KiCad.app/Contents/MacOS"
-export PATH="$PATH:/Applications/Wolfram.app/Contents/MacOS/"
+# Tell Zsh to keep both 'path' and 'PATH' arrays bound together and strictly UNIQUE
+typeset -U path PATH
 
-export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
+# 2. Add our custom dotfile scripts folder
+path+=( "$DOTFILES_DIR/scripts" )
+
+# 3. Add App Paths (Only if they actually exist on this machine)
+# This prevents Zsh from searching dead paths on fresh system setups
+apps_to_load=(
+    "/Users/$USER/CEDev/bin"
+    "/Users/$USER/.pixi/bin"
+    "/Users/$USER/Library/Application Support/Steam/steamapps/common/Blender/Blender.app/Contents/MacOS"
+    "/Applications/Inkscape.app/Contents/MacOS"
+    "/Applications/KiCad/KiCad.app/Contents/MacOS"
+    "/Applications/Wolfram.app/Contents/MacOS"
+)
+
+for app_dir in $apps_to_load; do
+    if [ -d "$app_dir" ]; then
+        path+=( "$app_dir" )
+    fi
+done
 
 if [ -x "$(which zoxide)" ];
 then
