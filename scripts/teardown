@@ -15,7 +15,7 @@ if [ -L "$HOME/.zshrc" ]; then
 fi
 
 # Unstow the desired packages from the home directory
-for package in nvim tmux zsh; do
+for package in ghostty nvim tmux zsh; do
     stow -D -v --dotfiles -t "$HOME" "$package"
 done
 

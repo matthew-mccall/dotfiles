@@ -5,6 +5,6 @@ cd "$(dirname "$0")/.." || exit 1
 git submodule update --init --recursive
 
 # Stow the desired packages into the home directory
-for package in nvim tmux zsh; do
+for package in ghostty nvim tmux zsh; do
     stow -v --dotfiles -t "$HOME" "$package"
 done
